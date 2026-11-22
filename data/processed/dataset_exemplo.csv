@@ -1,0 +1,7 @@
+falha,desliga_em_tarefa_pesada,bipes_ao_ligar,conexao_cai
+superaquecimento,1,0,0
+superaquecimento,1,0,1
+falha_ram,0,1,0
+falha_ram,1,1,0
+falha_rede,0,0,1
+falha_rede,1,0,1
