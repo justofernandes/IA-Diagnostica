@@ -1,8 +1,9 @@
-ipykernel
-joblib
-matplotlib
-numpy
-pandas
-scikit-learn
-seaborn
-streamlit
+ipykernel>=7.0,<8
+joblib>=1.5,<2
+matplotlib>=3.10.7,<4
+numpy>=2.3.3,<3
+pandas>=3.0,<4
+pytest>=9.0,<10
+scikit-learn>=1.8,<2
+seaborn>=0.13.2,<0.14
+streamlit>=1.56,<2

@@ -62,12 +62,28 @@ Para começar em paralelo, a equipe combina duas coisas logo no início: **as co
 | `scripts/` | Pasta prevista para gerar gráficos, avaliar o classificador e simular entrevistas. |
 | `docs/` | Dicionário, documentação acadêmica e figuras exportadas. |
 | `models/` | Artefatos gerados pelo treinamento. |
+| `tests/` | Testes automatizados. |
 
 ## Preparar o ambiente no Windows
 
 Instale o Python 3.11 ou 3.12. Abra o PowerShell na pasta do projeto e execute os comandos abaixo para criar o ambiente e instalar as dependências.
 
 ```powershell
-py -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
+
+Se você instalou o Python 3.11, troque `-3.12` por `-3.11`.
+
+## Executar
+
+Rode os comandos na pasta raiz do projeto.
+
+| Tarefa | Comando |
+| --- | --- |
+| Treinar o modelo com o CSV de exemplo | `.\.venv\Scripts\python.exe -m src.modelo` |
+| Resumir o CSV de exemplo | `.\.venv\Scripts\python.exe scripts/analisar_dados.py` |
+| Resumir outro CSV | `.\.venv\Scripts\python.exe scripts/analisar_dados.py caminho/para/casos.csv` |
+| Rodar os testes | `.\.venv\Scripts\python.exe -m pytest` |
+
+No Linux ou macOS, use `.venv/bin/python` no lugar de `.\.venv\Scripts\python.exe`.
