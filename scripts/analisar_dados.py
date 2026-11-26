@@ -1,7 +1,11 @@
+import argparse
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parents[1]))
+RAIZ = Path(__file__).resolve().parents[1]
+CSV_EXEMPLO = RAIZ / "data" / "processed" / "dataset_exemplo.csv"
+
+sys.path.append(str(RAIZ))
 
 from src.dados import carregar_csv
 
@@ -35,4 +39,11 @@ def analisar(caminho):
 
 
 if __name__ == "__main__":
-    analisar(sys.argv[1])
+    parser = argparse.ArgumentParser(description="Resume um CSV de casos e sintomas.")
+    parser.add_argument(
+        "caminho",
+        nargs="?",
+        default=CSV_EXEMPLO,
+        help="CSV a analisar (padrão: o CSV de exemplo)",
+    )
+    analisar(parser.parse_args().caminho)

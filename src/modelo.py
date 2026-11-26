@@ -2,31 +2,41 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
-from sklearn.impute import SimpleImputer
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.pipeline import Pipeline
 
-from src.dados import carregar_csv, separar_sintomas_e_falhas
+from src.dados import (
+    carregar_csv,
+    normalizar_falhas,
+    separar_sintomas_e_falhas,
+    validar_dados,
+)
 
 CAMINHO_MODELO_PADRAO = Path("models/modelo_diagnostico.joblib")
 
 
 def treinar_modelo(
-    caminho_csv: str | Path,
+    origem: str | Path | pd.DataFrame,
     alpha: float = 1.0,
     caminho_saida: str | Path | None = CAMINHO_MODELO_PADRAO,
 ) -> Pipeline:
     """Treina o classificador BernoulliNB a partir do CSV processado."""
-    dados = carregar_csv(caminho_csv)
+    if isinstance(origem, pd.DataFrame):
+        validar_dados(origem)
+        dados = normalizar_falhas(origem)
+    else:
+        dados = carregar_csv(origem)
+
     x, y = separar_sintomas_e_falhas(dados)
 
-    modelo = Pipeline(
-        [
-            ("imputador", SimpleImputer(strategy="most_frequent")),
-            ("classificador", BernoulliNB(alpha=alpha)),
-        ]
-    )
+    vazios = x.columns[x.isna().any()].tolist()
+    if vazios:
+        raise ValueError(
+            f"Há campos vazios nas colunas: {', '.join(vazios)}. "
+            "O treino aceita apenas 0 ou 1."
+        )
 
+    modelo = BernoulliNB(alpha=alpha)
     modelo.fit(x, y)
 
     if caminho_saida is not None:
