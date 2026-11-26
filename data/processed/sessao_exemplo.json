@@ -1,0 +1,82 @@
+{
+  "versao": 1,
+  "parametros": {
+    "tau": 0.8,
+    "delta": 0.2,
+    "n_max": 10
+  },
+  "rodadas": [
+    {
+      "n": 1,
+      "sintoma": "bipes_ao_ligar",
+      "ganhos": {
+        "desliga_em_tarefa_pesada": 0.042776,
+        "bipes_ao_ligar": 0.168591,
+        "conexao_cai": 0.125815
+      },
+      "resposta": "sim",
+      "antes": {
+        "falha_ram": 0.333333,
+        "falha_rede": 0.333333,
+        "superaquecimento": 0.333333
+      },
+      "depois": {
+        "falha_ram": 0.6,
+        "falha_rede": 0.2,
+        "superaquecimento": 0.2
+      }
+    },
+    {
+      "n": 2,
+      "sintoma": "conexao_cai",
+      "ganhos": {
+        "desliga_em_tarefa_pesada": 0.030519,
+        "conexao_cai": 0.121928
+      },
+      "resposta": "nao_sei",
+      "antes": {
+        "falha_ram": 0.6,
+        "falha_rede": 0.2,
+        "superaquecimento": 0.2
+      },
+      "depois": {
+        "falha_ram": 0.6,
+        "falha_rede": 0.2,
+        "superaquecimento": 0.2
+      }
+    },
+    {
+      "n": 3,
+      "sintoma": "desliga_em_tarefa_pesada",
+      "ganhos": {
+        "desliga_em_tarefa_pesada": 0.030519
+      },
+      "resposta": "sim",
+      "antes": {
+        "falha_ram": 0.6,
+        "falha_rede": 0.2,
+        "superaquecimento": 0.2
+      },
+      "depois": {
+        "falha_ram": 0.545455,
+        "falha_rede": 0.181818,
+        "superaquecimento": 0.272727
+      }
+    }
+  ],
+  "parada": "sem_perguntas",
+  "hipoteses": [
+    [
+      "falha_ram",
+      0.545455
+    ],
+    [
+      "superaquecimento",
+      0.272727
+    ],
+    [
+      "falha_rede",
+      0.181818
+    ]
+  ]
+}
