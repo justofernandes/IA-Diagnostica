@@ -9,7 +9,7 @@ def carregar_csv(caminho: str | Path) -> pd.DataFrame:
         caminho, encoding="utf-8", keep_default_na=False, na_values=[""]
     )
     validar_dados(dados)
-    return dados
+    return normalizar_falhas(dados)
 
 
 def validar_dados(dados: pd.DataFrame) -> None:
@@ -19,6 +19,9 @@ def validar_dados(dados: pd.DataFrame) -> None:
 
     if dados.empty:
         raise ValueError("O CSV precisa conter pelo menos um caso de diagnóstico.")
+
+    if dados.drop(columns="falha").shape[1] == 0:
+        raise ValueError("O CSV precisa ter sintomas")
 
     falhas = dados["falha"].astype("string").fillna("").str.strip()
     if falhas.eq("").any():
@@ -32,6 +35,13 @@ def validar_dados(dados: pd.DataFrame) -> None:
                 f"A coluna '{coluna}' contém o valor inválido '{valor}'. "
                 "Use 0, 1 ou deixe o campo em branco."
             )
+
+
+def normalizar_falhas(dados: pd.DataFrame) -> pd.DataFrame:
+    """Devolve uma cópia sem espaços sobrando nos nomes das falhas."""
+    copia = dados.copy()
+    copia["falha"] = copia["falha"].astype(str).str.strip()
+    return copia
 
 
 def separar_sintomas_e_falhas(dados: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
